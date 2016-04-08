@@ -28,7 +28,7 @@ class Sensei_Media_Attachments {
 		add_action( 'save_post', array( $this, 'save_media_meta_box' ) );
 
 		// Media files display
-		add_action( 'sensei_course_single_lessons', array( $this, 'display_attached_media' ), 9 );
+		add_action( 'sensei_single_course_content_inside_before', array( $this, 'display_attached_media' ), 35 );
 		add_action( 'sensei_lesson_single_meta', array( $this, 'display_attached_media' ), 1 );
 	}
 
