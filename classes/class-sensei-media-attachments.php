@@ -28,8 +28,16 @@ class Sensei_Media_Attachments {
 		add_action( 'save_post', array( $this, 'save_media_meta_box' ) );
 
 		// Media files display
-		add_action( 'sensei_single_course_content_inside_before', array( $this, 'display_attached_media' ), 35 );
-		add_action( 'sensei_lesson_single_meta', array( $this, 'display_attached_media' ), 1 );
+		if ( version_compare( Sensei()->version, '1.9.0', '>=' ) )  {
+			// Using Sensei v1.9.0 or greater. Register new hooks
+			add_action( 'sensei_single_course_content_inside_before', array( $this, 'display_attached_media' ), 35 );
+			add_action( 'sensei_single_lesson_content_inside_after', array( $this, 'display_attached_media' ), 1 );
+		} else {
+			// Register deprecated hooks
+			add_action( 'sensei_course_single_lessons', array( $this, 'display_attached_media' ), 35 );
+			add_action( 'sensei_lesson_single_meta', array( $this, 'display_attached_media' ), 1 );
+		}
+		
 	}
 
 	/**
