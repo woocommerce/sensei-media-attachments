@@ -162,6 +162,8 @@ class Sensei_Media_Attachments {
 
 		$post_type = ucfirst( get_post_type( $post ) );
 
+      //HIDE MEDIA IF NO ACCESS  
+      if($post_type == 'Course' && sensei_has_user_started_course($post->ID)) { 
 		if( $media && is_array( $media ) && count( $media ) > 0 ) {
 			$html .= '<div id="attached-media">';
 				$html .= '<h2>' . sprintf( __( '%s Media', 'sensei_media_attachments' ), $post_type ) . '</h2>';
@@ -174,6 +176,20 @@ class Sensei_Media_Attachments {
 				$html .= '</ul>';
 			$html .= '</div>';
 		}
+	   } elseif ($post_type == 'Lesson' &&  sensei_can_user_view_lesson()) {
+		if( $media && is_array( $media ) && count( $media ) > 0 ) {
+			$html .= '<div id="attached-media">';
+				$html .= '<h2>' . sprintf( __( '%s Media', 'sensei_media_attachments' ), $post_type ) . '</h2>';
+				$html .= '<ul>';
+					foreach( $media as $k => $file ) {
+						$file_parts = explode( '/', $file );
+		    			$file_name = array_pop( $file_parts );
+						$html .= '<li id="attached_media_' . $k . '"><a href="' . esc_url( $file ) . '" target="_blank">' . esc_html( $file_name ) . '</a></li>';
+					}
+				$html .= '</ul>';
+			$html .= '</div>';
+		}   
+	   }
 
 		echo $html;
 	}
