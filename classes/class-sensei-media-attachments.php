@@ -160,11 +160,17 @@ class Sensei_Media_Attachments {
 
 		$html = '';
 
-		$post_type = ucfirst( get_post_type( $post ) );
+		$media_heading = '';
+		$post_type = get_post_type( $post );
+		if( 'lesson' == $post_type ) {
+			$media_heading == __( 'Lesson Media', 'sensei_media_attachments' );
+		} elseif( 'course' == $post_type ) {
+			$media_heading == __( 'Course Media', 'sensei_media_attachments' );
+		}
 
 		if( $media && is_array( $media ) && count( $media ) > 0 ) {
 			$html .= '<div id="attached-media">';
-				$html .= '<h2>' . sprintf( __( '%s Media', 'sensei_media_attachments' ), $post_type ) . '</h2>';
+				$html .= '<h2>' . $media_heading . '</h2>';
 				$html .= '<ul>';
 					foreach( $media as $k => $file ) {
 						$file_parts = explode( '/', $file );
