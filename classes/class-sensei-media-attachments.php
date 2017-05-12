@@ -161,8 +161,21 @@ class Sensei_Media_Attachments {
 		$html = '';
 
 		$post_type = ucfirst( get_post_type( $post ) );
+		
+		$current_user = wp_get_current_user();
+		
+		/**
+		 * Determine whether to display attached media or not.
+		 *
+		 * @since 1.0.1
+		 *
+		 * @param bool $true True to display media, false otherwise.
+		 * @param int $post->ID The current post ID.
+		 * @param int $current_user->ID The current user ID.
+		 */
+		$should_display_media = apply_filters( 'sma_should_display_media', true, $post->ID, $current_user->ID )
 
-		if( $media && is_array( $media ) && count( $media ) > 0 ) {
+		if( $media && is_array( $media ) && count( $media ) > 0 && $should_display_media ) {
 			$html .= '<div id="attached-media">';
 				$html .= '<h2>' . sprintf( __( '%s Media', 'sensei_media_attachments' ), $post_type ) . '</h2>';
 				$html .= '<ul>';
