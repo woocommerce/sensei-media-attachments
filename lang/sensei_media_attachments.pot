@@ -26,18 +26,14 @@ msgstr ""
 msgid "Add file"
 msgstr ""
 
-#: classes/class-sensei-media-attachments.php:66
+#: classes/class-sensei-media-attachments.php:66, classes/class-sensei-media-attachments.php:171
 msgid "Course Media"
 msgstr ""
 
-#: classes/class-sensei-media-attachments.php:67
+#: classes/class-sensei-media-attachments.php:67, classes/class-sensei-media-attachments.php:170
 msgid "Lesson Media"
 msgstr ""
 
 #: classes/class-sensei-media-attachments.php:110
 msgid "+ Add more files"
-msgstr ""
-
-#: classes/class-sensei-media-attachments.php:167
-msgid "%s Media"
 msgstr ""
