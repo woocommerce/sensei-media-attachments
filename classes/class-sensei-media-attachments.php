@@ -157,29 +157,28 @@ class Sensei_Media_Attachments {
 		global $post;
 
 		$media = get_post_meta( $post->ID, '_attached_media', true );
+		if( ! is_array( $media ) || 0 === count( $media ) ) {
+			return;
+		}
 
-		$html = '';
-
-		$media_heading = '';
 		$post_type = get_post_type( $post );
-		if( 'lesson' == $post_type ) {
-			$media_heading == __( 'Lesson Media', 'sensei_media_attachments' );
-		} elseif( 'course' == $post_type ) {
-			$media_heading == __( 'Course Media', 'sensei_media_attachments' );
+		if ( ! in_array( $post_type, array( 'course', 'lesson' ), true ) ) {
+			return;
 		}
 
-		if( $media && is_array( $media ) && count( $media ) > 0 ) {
-			$html .= '<div id="attached-media">';
-				$html .= '<h2>' . $media_heading . '</h2>';
-				$html .= '<ul>';
-					foreach( $media as $k => $file ) {
-						$file_parts = explode( '/', $file );
-		    			$file_name = array_pop( $file_parts );
-						$html .= '<li id="attached_media_' . $k . '"><a href="' . esc_url( $file ) . '" target="_blank">' . esc_html( $file_name ) . '</a></li>';
-					}
-				$html .= '</ul>';
-			$html .= '</div>';
+		$media_heading = ( 'lesson' === $post_type ) ?
+			__( 'Lesson Media', 'sensei_media_attachments' ) :
+			__( 'Course Media', 'sensei_media_attachments' );
+
+		$html = '<div id="attached-media">';
+		$html .= '<h2>' . esc_html( $media_heading ) . '</h2>';
+		$html .= '<ul>';
+		foreach( $media as $k => $file ) {
+			$file_parts = explode( '/', $file );
+			$file_name = array_pop( $file_parts );
+			$html .= '<li id="attached_media_' . esc_attr( $k ) . '"><a href="' . esc_url( $file ) . '" target="_blank">' . esc_html( $file_name ) . '</a></li>';
 		}
+		$html .= '</ul></div>';
 
 		echo $html;
 	}
