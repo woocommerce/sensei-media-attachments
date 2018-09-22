@@ -2,15 +2,15 @@
 /*
  * Plugin Name: Sensei Media Attachments
  * Version: 1.0.0
- * Plugin URI: http://www.woothemes.com/
+ * Plugin URI: https://woocommerce.com/products/sensei-media-attachments/
  * Description: Enhance your lessons by attaching media files to lessons and courses in Sensei
- * Author: WooThemes
- * Author URI: http://www.woothemes.com/
+ * Author: Automattic
+ * Author URI: https://automattic.com/
  * Requires at least: 3.5
  * Tested up to: 3.8
  *
  * @package WordPress
- * @author WooThemes
+ * @author Automattic
  * @since 1.0.0
  */
 
