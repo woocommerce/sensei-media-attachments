@@ -88,7 +88,7 @@ if ( ! class_exists( 'WooThemes_Updater' ) && ! function_exists( 'woothemes_upda
 		}
 
 		echo '<div class="updated fade"><p><a href="' . esc_url( $message_url ) . '">' .
-			esc_html( $message_text ) . ' the WooThemes Updater plugin</a> to get updates for your WooThemes plugins.</p></div>' . "\n";
+			esc_html( $message_text ) . ' the WooThemes Updater plugin</a> to receive updates for Sensei Media Attachments.</p></div>' . "\n";
 	}
 
 	add_action( 'admin_notices', 'woothemes_updater_notice' );
