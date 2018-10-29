@@ -36,8 +36,8 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element name="sensei"/>
-				<element name="woothemes"/>
+				<element value="sensei"/>
+				<element value="woothemes"/>
 			</property>
 		</properties>
 	</rule>
@@ -45,7 +45,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element name="sensei_media_attachments"/>
+				<element value="sensei_media_attachments"/>
 			</property>
 		</properties>
 	</rule>
