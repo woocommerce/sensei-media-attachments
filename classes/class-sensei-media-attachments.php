@@ -19,6 +19,7 @@ class Sensei_Media_Attachments {
 		// Localisation
 		$this->load_plugin_textdomain();
 		add_action( 'init', array( $this, 'load_localisation' ), 0 );
+		add_action( 'init', array( $this, 'frontend_hooks' ), 15 );
 
 		// Admin JS
 		add_action( 'admin_enqueue_scripts' , array( $this, 'enqueue_admin_scripts' ) , 10 );
@@ -26,10 +27,20 @@ class Sensei_Media_Attachments {
 		// Meta boxes
 		add_action( 'add_meta_boxes', array( $this, 'add_media_meta_box' ) );
 		add_action( 'save_post', array( $this, 'save_media_meta_box' ) );
+	}
 
+	/**
+	 * All frontend hooks.
+	 */
+	public function frontend_hooks() {
 		// Media files display
+		if ( version_compare( Sensei()->version, '1.9.0',  '<' ) ) {
+			add_action( 'sensei_lesson_single_meta', array( $this, 'display_attached_media' ), 35 );
+		} else {
+			add_action( 'sensei_single_lesson_content_inside_after', array( $this, 'display_attached_media' ), 35 );
+		}
+
 		add_action( 'sensei_single_course_content_inside_before', array( $this, 'display_attached_media' ), 35 );
-		add_action( 'sensei_lesson_single_meta', array( $this, 'display_attached_media' ), 1 );
 	}
 
 	/**
