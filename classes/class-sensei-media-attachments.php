@@ -48,7 +48,7 @@ class Sensei_Media_Attachments {
 			$localised_data = array(
 				'upload_file' => __( 'Upload File' , 'sensei_media_attachments' ),
 				'choose_file' => __( 'Choose a file', 'sensei_media_attachments' ),
-				'add_file'	  => __( 'Add file', 'sensei_media_attachments' )
+				'add_file'    => __( 'Add file', 'sensei_media_attachments' )
 			);
 			wp_localize_script( 'sensei-media-attachments-admin', 'sensei_media_attachments_localisation', $localised_data );
 
@@ -87,7 +87,7 @@ class Sensei_Media_Attachments {
 				if( $c == 0 ) {
 					$html .= '<tr valign="top">' . "\n";
 				}
-				$html .= '<td><input type="button" id="sensei_media_attachments_' . $k . '_button" class="button upload_media_file_button" value="'. __( 'Upload File' , 'sensei_media_attachments' ) . '" data-uploader_title="' . __( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . __( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" type="text" id="sensei_media_attachments_' . $k . '" value="' . $file . '" /></td>' . "\n";
+				$html .= '<td><input type="button" id="sensei_media_attachments_' . esc_attr( $k ) . '_button" class="button upload_media_file_button" value="'. __( 'Upload File' , 'sensei_media_attachments' ) . '" data-uploader_title="' . __( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . __( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" type="text" id="sensei_media_attachments_' . esc_attr( $k ) . '" value="' . esc_url( $file ) . '" /></td>' . "\n";
 				$c++;
 				if( $c == 2 ) {
 					$html .= '</tr>' . "\n";
@@ -113,7 +113,7 @@ class Sensei_Media_Attachments {
 		$html .= '</tbody>' . "\n";
 		$html .= '</table>' . "\n";
 
-		echo $html;
+		echo $html; // WPCS: XSS ok.
 	}
 
 	/**
@@ -180,7 +180,7 @@ class Sensei_Media_Attachments {
 		}
 		$html .= '</ul></div>';
 
-		echo $html;
+		echo $html; // WPCS: XSS ok.
 	}
 
 	/**
@@ -196,12 +196,12 @@ class Sensei_Media_Attachments {
 	 * @return void
 	 */
 	public function load_plugin_textdomain () {
-	    $domain = 'sensei_media_attachments';
+			$domain = 'sensei_media_attachments';
 
-	    $locale = apply_filters( 'plugin_locale' , get_locale() , $domain );
+			$locale = apply_filters( 'plugin_locale' , get_locale() , $domain );
 
-	    load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
-	    load_plugin_textdomain( $domain, false, dirname( plugin_basename( $this->file ) ) . '/lang/' );
+			load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
+			load_plugin_textdomain( $domain, false, dirname( plugin_basename( $this->file ) ) . '/lang/' );
 	}
 
 }
