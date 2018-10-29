@@ -1,5 +1,8 @@
 <?xml version="1.0"?>
-<ruleset name="Sensei Media Attachments">
+<ruleset name="Sensei Media Attachments"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="vendor/squizlabs/php_codesniffer/phpcs.xsd">
+
 	<description>A custom set of code standard rules to check for the Sensei Media Attachments plugin.</description>
 
 	<!-- For help in understanding this file: https://github.com/squizlabs/PHP_CodeSniffer/wiki/Annotated-ruleset.xml -->
@@ -36,8 +39,8 @@
 	<rule ref="WordPress.NamingConventions.PrefixAllGlobals">
 		<properties>
 			<property name="prefixes" type="array">
-				<element name="sensei"/>
-				<element name="woothemes"/>
+				<element value="sensei"/>
+				<element value="woothemes"/>
 			</property>
 		</properties>
 	</rule>
@@ -45,7 +48,7 @@
 	<rule ref="WordPress.WP.I18n">
 		<properties>
 			<property name="text_domain" type="array">
-				<element name="sensei_media_attachments"/>
+				<element value="sensei_media_attachments"/>
 			</property>
 		</properties>
 	</rule>
