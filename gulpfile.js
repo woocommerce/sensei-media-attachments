@@ -1,6 +1,7 @@
 var gulp      = require( 'gulp' );
 var wpPot     = require( 'gulp-wp-pot' );
 var sort      = require( 'gulp-sort' );
+var del       = require( 'del' );
 var zip       = require( 'gulp-zip' );
 
 var paths = {
@@ -44,4 +45,4 @@ gulp.task( 'zip-package', function() {
 		.pipe( gulp.dest( '.' ) );
 } );
 
-gulp.task( 'package', gulp.series( 'copy-package', 'zip-package' ) );
+gulp.task( 'package', gulp.series( 'clean', 'copy-package', 'zip-package' ) );
