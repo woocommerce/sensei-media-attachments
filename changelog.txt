@@ -1,4 +1,13 @@
 *** Sensei Media Attachments Changelog ***
 
+2018.11.07 - version 1.0.1
+
+* Add: Russian translations
+* Fix: Location of course media output
+* Fix: Some strict standards errors
+* Fix: Translation for "Course/Lesson Media"
+* Fix: Code escaping issues
+* Fix: Remove usage of deprecated hooks
+
 2014.01.15 - version 1.0.0
 * First release
