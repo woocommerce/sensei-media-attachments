@@ -28,7 +28,7 @@ if ( ! function_exists( 'woothemes_queue_update' ) ) {
  */
 woothemes_queue_update( plugin_basename( __FILE__ ), '788647a9a1d8ef5c95371f0e69223a0f', '290551' );
 
-require_once __DIR__ . '/classes/class-sensei-media-attachments-dependency-checker.php';
+require_once dirname( __FILE__ ) . '/classes/class-sensei-media-attachments-dependency-checker.php';
 
 if ( ! Sensei_Media_Attachments_Dependency_Checker::are_dependencies_met() ) {
 	return;
