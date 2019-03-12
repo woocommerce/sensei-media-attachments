@@ -107,7 +107,7 @@ class Sensei_Media_Attachments_Dependency_Checker {
 		}
 
 		// translators: %1$s is version of PHP that this plugin requires; %2$s is the version of PHP WordPress is running on.
-		$message = sprintf( __( '<strong>Sensei Media Attachments</strong> requires PHP version %1$s but you are running %2$s.', 'sensei-media-attachments' ), self::MINIMUM_PHP_VERSION, phpversion() );
+		$message = sprintf( __( '<strong>Sensei Media Attachments</strong> requires PHP version %1$s but you are running %2$s.', 'sensei_media_attachments' ), self::MINIMUM_PHP_VERSION, phpversion() );
 		echo '<div class="error"><p>';
 		echo wp_kses( $message, array( 'strong' => array() ) );
 		$php_update_url = 'https://wordpress.org/support/update-php/';
@@ -117,9 +117,9 @@ class Sensei_Media_Attachments_Dependency_Checker {
 		printf(
 			'<p><a class="button button-primary" href="%1$s" target="_blank" rel="noopener noreferrer">%2$s <span class="screen-reader-text">%3$s</span><span aria-hidden="true" class="dashicons dashicons-external"></span></a></p>',
 			esc_url( $php_update_url ),
-			esc_html__( 'Learn more about updating PHP', 'sensei-media-attachments' ),
+			esc_html__( 'Learn more about updating PHP', 'sensei_media_attachments' ),
 			/* translators: accessibility text */
-			esc_html__( '(opens in a new tab)', 'sensei-media-attachments' )
+			esc_html__( '(opens in a new tab)', 'sensei_media_attachments' )
 		);
 		echo '</p></div>';
 	}
@@ -138,7 +138,7 @@ class Sensei_Media_Attachments_Dependency_Checker {
 		}
 
 		// translators: %1$s is the minimum version number of Sensei that is required.
-		$message = sprintf( __( '<strong>Sensei Media Attachments</strong> requires the plugin <strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) is installed and activated.', 'sensei-media-attachments' ), self::MINIMUM_SENSEI_VERSION );
+		$message = sprintf( __( '<strong>Sensei Media Attachments</strong> requires the plugin <strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) is installed and activated.', 'sensei_media_attachments' ), self::MINIMUM_SENSEI_VERSION );
 		echo '<div class="error"><p>';
 		echo wp_kses( $message, array( 'strong' => array() ) );
 		echo '</p></div>';
