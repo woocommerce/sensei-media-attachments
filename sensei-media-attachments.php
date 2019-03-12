@@ -28,25 +28,13 @@ if ( ! function_exists( 'woothemes_queue_update' ) ) {
  */
 woothemes_queue_update( plugin_basename( __FILE__ ), '788647a9a1d8ef5c95371f0e69223a0f', '290551' );
 
-/**
- * Functions used by plugins
- */
-if ( ! class_exists( 'WooThemes_Sensei_Dependencies' ) ) {
-	require_once 'woo-includes/class-woothemes-sensei-dependencies.php';
+require_once __DIR__ . '/classes/class-sensei-media-attachments-dependency-checker.php';
+
+if ( ! Sensei_Media_Attachments_Dependency_Checker::are_dependencies_met() ) {
+	return;
 }
 
-/**
- * Sensei Detection
- */
-if ( ! function_exists( 'is_sensei_active' ) ) {
-  function is_sensei_active() {
-    return WooThemes_Sensei_Dependencies::sensei_active_check();
-  }
-}
+require_once( 'classes/class-sensei-media-attachments.php' );
 
-if( is_sensei_active() ) {
-	require_once( 'classes/class-sensei-media-attachments.php' );
-
-	global $sensei_media_attachments;
-	$sensei_media_attachments = new Sensei_Media_Attachments( __FILE__ );
-}
+global $sensei_media_attachments;
+$sensei_media_attachments = new Sensei_Media_Attachments( __FILE__ );
