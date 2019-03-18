@@ -177,6 +177,12 @@ class Sensei_Media_Attachments {
 			return;
 		}
 
+		$user_id   = get_current_user_id();
+		$course_id = 'course' === $post_type ? $post->ID : get_post_meta( $post->ID, '_lesson_course', true );
+		if ( ! Sensei_Utils::user_started_course( $course_id, $user_id ) ) {
+			return;
+		}
+
 		$media_heading = ( 'lesson' === $post_type ) ?
 			__( 'Lesson Media', 'sensei_media_attachments' ) :
 			__( 'Course Media', 'sensei_media_attachments' );
