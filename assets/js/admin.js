@@ -41,13 +41,11 @@ jQuery(document).ready(function($) {
 
 		// Get unique IDs for the upload fields
 		var id1 = String(Math.random()).replace('0.','');
-		var id2 = String(Math.random()).replace('0.','');
 		var row_id = 'media_attachments_row_'+String(Math.random()).replace('0.','');
 
 		// Generate HTML for upload fields
 		var html = '<tr valign="top" id="' + row_id + '">';
-		html += '<td><input type="button" id="sensei_media_attachments_' + id1 + '_button" class="button upload_media_file_button" value="' + sensei_media_attachments_localisation.upload_file + '" data-uploader_title="' + sensei_media_attachments_localisation.choose_file + '" data-uploader_button_text="' + sensei_media_attachments_localisation.add_file + '" /> <input name="sensei_media_attachments[]" type="text" id="sensei_media_attachments_' + id1 + '" value="" /></td>';
-		html += '<td><input type="button" id="sensei_media_attachments_' + id2 + '_button" class="button upload_media_file_button" value="' + sensei_media_attachments_localisation.upload_file + '" data-uploader_title="' + sensei_media_attachments_localisation.choose_file + '" data-uploader_button_text="' + sensei_media_attachments_localisation.add_file + '" /> <input name="sensei_media_attachments[]" type="text" id="sensei_media_attachments_' + id2 + '" value="" /></td>';
+		html += '<td><input type="button" id="sensei_media_attachments_' + id1 + '_button" class="button upload_media_file_button" value="' + sensei_media_attachments_localisation.upload_file + '" data-uploader_title="' + sensei_media_attachments_localisation.choose_file + '" data-uploader_button_text="' + sensei_media_attachments_localisation.add_file + '" /> <input name="sensei_media_attachments[]" class="sensei_media_attachments_file_input" type="text" id="sensei_media_attachments_' + id1 + '" value="" /></td>';
 		html += '</tr>';
 
 		// Append HTML to upload fields

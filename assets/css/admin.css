@@ -1,0 +1,8 @@
+#sensei_media_attachments td {
+	display: flex;
+}
+
+#sensei_media_attachments .sensei_media_attachments_file_input {
+	width: 100%;
+	margin-left: 0.5em;
+}
