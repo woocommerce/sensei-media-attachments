@@ -19,8 +19,6 @@ class Sensei_Media_Attachments {
 
 	/**
 	 * Sensei_Media_Attachments constructor.
-	 *
-	 * @param $file
 	 */
 	private function __construct() {
 		$this->assets_dir = trailingslashit( dirname( SENSEI_MEDIA_ATTACHMENTS_PLUGIN_FILE ) ) . 'assets';
@@ -264,7 +262,7 @@ class Sensei_Media_Attachments {
 	 *
 	 * Ensures only one instance of Sensei_Media_Attachments is loaded or can be loaded.
 	 *
-	 * @since  1.0.0
+	 * @since  2.0.0
 	 * @static
 	 * @return self
 	 */
