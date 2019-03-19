@@ -228,13 +228,41 @@ class Sensei_Media_Attachments {
 		$html .= '<h2>' . esc_html( $media_heading ) . '</h2>';
 		$html .= '<ul>';
 		foreach( $media as $k => $file ) {
-			$file_parts = explode( '/', $file );
-			$file_name = array_pop( $file_parts );
-			$html .= '<li id="attached_media_' . esc_attr( $k ) . '"><a href="' . esc_url( $file ) . '" target="_blank">' . esc_html( $file_name ) . '</a></li>';
+			$attachment_label = $this->get_attachment_title( $file );
+			$html .= '<li id="attached_media_' . esc_attr( $k ) . '"><a href="' . esc_url( $file ) . '" target="_blank">' . esc_html( $attachment_label ) . '</a></li>';
 		}
 		$html .= '</ul></div>';
 
 		echo $html; // WPCS: XSS ok.
+	}
+
+	/**
+	 * Get the attachment title.
+	 *
+	 * @param string $attachment_url Attachment URL.
+	 *
+	 * @return string
+	 */
+	private function get_attachment_title( $attachment_url ) {
+		$attachment_id = attachment_url_to_postid( $attachment_url );
+
+		if ( ! empty( $attachment_id ) ) {
+			$attachment_title = get_the_title( $attachment_id );
+		}
+
+		if ( empty( $attachment_title ) ) {
+			$url_path         = parse_url( $attachment_url, PHP_URL_PATH );
+			$attachment_title = basename( $url_path );
+		}
+
+		/**
+		 * Update the title that is displayed in the attachment list.
+		 *
+		 * @param string $attachment_title Title to display for the attachment.
+		 * @param string $attachment_url   URL of the attachment.
+		 * @param int    $attachment_id    Attachment post ID (if known).
+		 */
+		return apply_filters( 'sensei_media_attachments_get_attachment_title', $attachment_title, $attachment_url, $attachment_id );
 	}
 
 	/**
