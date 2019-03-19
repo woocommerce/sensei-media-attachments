@@ -3,30 +3,56 @@
 if ( ! defined( 'ABSPATH' ) ) exit;
 
 class Sensei_Media_Attachments {
-	private $dir;
-	private $file;
+	/**
+	 * The single instance of self.
+	 *
+	 * @var    self
+	 * @access private
+	 * @static
+	 * @since  2.0.0
+	 */
+	private static $instance = null;
+
 	private $assets_dir;
 	private $assets_url;
 	private $token;
 
-	public function __construct( $file ) {
-		$this->file = $file;
-		$this->dir = dirname( $this->file );
-		$this->assets_dir = trailingslashit( $this->dir ) . 'assets';
-		$this->assets_url = esc_url( trailingslashit( plugins_url( '/assets/', $this->file ) ) );
+	/**
+	 * Sensei_Media_Attachments constructor.
+	 *
+	 * @param $file
+	 */
+	private function __construct() {
+		$this->assets_dir = trailingslashit( dirname( SENSEI_MEDIA_ATTACHMENTS_PLUGIN_FILE ) ) . 'assets';
+		$this->assets_url = esc_url( trailingslashit( plugins_url( '/assets/', SENSEI_MEDIA_ATTACHMENTS_PLUGIN_FILE ) ) );
 		$this->token = 'sensei_media_attachments';
 
 		// Localisation
 		$this->load_plugin_textdomain();
 		add_action( 'init', array( $this, 'load_localisation' ), 0 );
-		add_action( 'init', array( $this, 'frontend_hooks' ), 15 );
+	}
+
+	/**
+	 * Set up all actions and filters.
+	 */
+	public static function init() {
+		global $sensei_media_attachments;
+
+		if ( ! Sensei_Media_Attachments_Dependency_Checker::are_plugin_dependencies_met() ) {
+			return;
+		}
+
+		// Set the global only if plugin dependencies are met.
+		$sensei_media_attachments = self::instance();
+
+		add_action( 'init', array( $sensei_media_attachments, 'frontend_hooks' ), 15 );
 
 		// Admin JS
-		add_action( 'admin_enqueue_scripts' , array( $this, 'enqueue_admin_scripts' ) , 10 );
+		add_action( 'admin_enqueue_scripts' , array( $sensei_media_attachments, 'enqueue_admin_scripts' ) , 10 );
 
 		// Meta boxes
-		add_action( 'add_meta_boxes', array( $this, 'add_media_meta_box' ) );
-		add_action( 'save_post', array( $this, 'save_media_meta_box' ) );
+		add_action( 'add_meta_boxes', array( $sensei_media_attachments, 'add_media_meta_box' ) );
+		add_action( 'save_post', array( $sensei_media_attachments, 'save_media_meta_box' ) );
 	}
 
 	/**
@@ -87,7 +113,7 @@ class Sensei_Media_Attachments {
 
 		$media = get_post_meta( $post_id, '_attached_media', true );
 
-		$html = '<input type="hidden" name="' . esc_attr( $this->token . '_nonce' ) . '" id="' . esc_attr( $this->token . '_nonce' ) . '" value="' . esc_attr( wp_create_nonce( plugin_basename( $this->file ) ) ) . '" />';
+		$html = '<input type="hidden" name="' . esc_attr( $this->token . '_nonce' ) . '" id="' . esc_attr( $this->token . '_nonce' ) . '" value="' . esc_attr( wp_create_nonce( SENSEI_MEDIA_ATTACHMENTS_PLUGIN_BASENAME ) ) . '" />';
 
 		$html .= '<table class="form-table" id="sensei_media_attachments">' . "\n";
 		$html .= '<tbody>' . "\n";
@@ -136,7 +162,7 @@ class Sensei_Media_Attachments {
 		global $post;
 
 		// Verify nonce
-		if ( ! in_array( get_post_type(), array( 'lesson', 'course' ) ) || ! wp_verify_nonce( $_POST[ $this->token . '_nonce' ], plugin_basename( $this->file ) ) ) {
+		if ( ! in_array( get_post_type(), array( 'lesson', 'course' ) ) || ! wp_verify_nonce( $_POST[ $this->token . '_nonce' ], SENSEI_MEDIA_ATTACHMENTS_PLUGIN_BASENAME ) ) {
 			return $post_id;
 		}
 
@@ -217,7 +243,7 @@ class Sensei_Media_Attachments {
 	 * @return void
 	 */
 	public function load_localisation () {
-		load_plugin_textdomain( 'sensei_media_attachments', false, dirname( plugin_basename( $this->file ) ) . '/lang/' );
+		load_plugin_textdomain( 'sensei_media_attachments', false, dirname( SENSEI_MEDIA_ATTACHMENTS_PLUGIN_BASENAME ) . '/lang/' );
 	}
 
 	/**
@@ -225,12 +251,29 @@ class Sensei_Media_Attachments {
 	 * @return void
 	 */
 	public function load_plugin_textdomain () {
-			$domain = 'sensei_media_attachments';
+		$domain = 'sensei_media_attachments';
 
-			$locale = apply_filters( 'plugin_locale' , get_locale() , $domain );
+		$locale = apply_filters( 'plugin_locale' , get_locale() , $domain );
 
-			load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
-			load_plugin_textdomain( $domain, false, dirname( plugin_basename( $this->file ) ) . '/lang/' );
+		load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
+		load_plugin_textdomain( $domain, false, dirname( SENSEI_MEDIA_ATTACHMENTS_PLUGIN_BASENAME ) . '/lang/' );
+	}
+
+	/**
+	 * Main Sensei_Media_Attachments Instance
+	 *
+	 * Ensures only one instance of Sensei_Media_Attachments is loaded or can be loaded.
+	 *
+	 * @since  1.0.0
+	 * @static
+	 * @return self
+	 */
+	public static function instance() {
+		if ( is_null( self::$instance ) ) {
+			self::$instance = new self();
+		}
+
+		return self::$instance;
 	}
 
 }
