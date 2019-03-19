@@ -25,9 +25,7 @@ class Sensei_Media_Attachments {
 		$this->assets_url = esc_url( trailingslashit( plugins_url( '/assets/', SENSEI_MEDIA_ATTACHMENTS_PLUGIN_FILE ) ) );
 		$this->token = 'sensei_media_attachments';
 
-		// Localisation
 		$this->load_plugin_textdomain();
-		add_action( 'init', array( $this, 'load_localisation' ), 0 );
 	}
 
 	/**
@@ -36,21 +34,24 @@ class Sensei_Media_Attachments {
 	public static function init() {
 		global $sensei_media_attachments;
 
+		$instance = self::instance();
+		add_action( 'init', array( $instance, 'load_localisation' ), 0 );
+
 		if ( ! Sensei_Media_Attachments_Dependency_Checker::are_plugin_dependencies_met() ) {
 			return;
 		}
 
 		// Set the global only if plugin dependencies are met.
-		$sensei_media_attachments = self::instance();
+		$sensei_media_attachments = $instance;
 
-		add_action( 'init', array( $sensei_media_attachments, 'frontend_hooks' ), 15 );
+		add_action( 'init', array( $instance, 'frontend_hooks' ), 15 );
 
 		// Admin JS
-		add_action( 'admin_enqueue_scripts' , array( $sensei_media_attachments, 'enqueue_admin_scripts' ) , 10 );
+		add_action( 'admin_enqueue_scripts' , array( $instance, 'enqueue_admin_scripts' ) , 10 );
 
 		// Meta boxes
-		add_action( 'add_meta_boxes', array( $sensei_media_attachments, 'add_media_meta_box' ) );
-		add_action( 'save_post', array( $sensei_media_attachments, 'save_media_meta_box' ) );
+		add_action( 'add_meta_boxes', array( $instance, 'add_media_meta_box' ) );
+		add_action( 'save_post', array( $instance, 'save_media_meta_box' ) );
 	}
 
 	/**
@@ -237,7 +238,8 @@ class Sensei_Media_Attachments {
 	}
 
 	/**
-	 * Load localisation
+	 * Load localisation.
+	 *
 	 * @return void
 	 */
 	public function load_localisation () {
@@ -245,7 +247,8 @@ class Sensei_Media_Attachments {
 	}
 
 	/**
-	 * Load plguin textdomain
+	 * Load plugin textdomain.
+	 *
 	 * @return void
 	 */
 	public function load_plugin_textdomain () {
