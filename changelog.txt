@@ -1,5 +1,17 @@
 *** Sensei Media Attachments Changelog ***
 
+2019.03.28 - version 2.0.0
+* New: Add dependency check for minimum Sensei (1.11.0) and PHP (5.6) versions
+* New: Add `sensei_media_attachments_media_heading` filter for customizing media heading
+* New: Add partial Slovenian translation
+* Tweak: Use media title as display name of the media file
+* Tweak: Change two-column media attachment layout to a single column layout
+* Tweak: Refactor to load plugin after `plugins_loaded` hook
+* Tweak: Remove deprecated version check
+* Tweak: Remove Woo updater functions and use `Woo` header instead
+* Fix: Don't show course/lesson media for users not taking a course
+* Fix: Version the admin script
+
 2018.11.07 - version 1.0.1
 
 * Add: Russian translations
