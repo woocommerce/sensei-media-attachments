@@ -1,7 +1,7 @@
 <?php
 /*
  * Plugin Name: Sensei Media Attachments
- * Version: 1.0.1
+ * Version: 2.0.0-beta.1
  * Plugin URI: https://woocommerce.com/products/sensei-media-attachments/
  * Description: Enhance your lessons by attaching media files to lessons and courses in Sensei
  * Author: Automattic
@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SENSEI_MEDIA_ATTACHMENTS_VERSION', '1.0.1' );
+define( 'SENSEI_MEDIA_ATTACHMENTS_VERSION', '2.0.0-beta.1' );
 define( 'SENSEI_MEDIA_ATTACHMENTS_PLUGIN_FILE', __FILE__ );
 define( 'SENSEI_MEDIA_ATTACHMENTS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 
