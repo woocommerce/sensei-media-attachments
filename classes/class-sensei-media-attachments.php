@@ -68,25 +68,20 @@ class Sensei_Media_Attachments {
 	 * @return void
 	 */
 	public function enqueue_admin_scripts () {
-		global $wp_version;
+		// Load admin JS
+		wp_register_script( 'sensei-media-attachments-admin', esc_url( $this->assets_url . 'js/admin.js' ), array( 'jquery' ), SENSEI_MEDIA_ATTACHMENTS_VERSION );
+		wp_enqueue_script( 'sensei-media-attachments-admin' );
 
-		if( $wp_version >= 3.5 ) {
-			// Load admin JS
-			wp_register_script( 'sensei-media-attachments-admin', esc_url( $this->assets_url . 'js/admin.js' ), array( 'jquery' ), '1.0.0' );
-			wp_enqueue_script( 'sensei-media-attachments-admin' );
+		// Localise Javacript text strings
+		$localised_data = array(
+			'upload_file' => __( 'Upload File' , 'sensei_media_attachments' ),
+			'choose_file' => __( 'Choose a file', 'sensei_media_attachments' ),
+			'add_file'    => __( 'Add file', 'sensei_media_attachments' )
+		);
+		wp_localize_script( 'sensei-media-attachments-admin', 'sensei_media_attachments_localisation', $localised_data );
 
-			// Localise Javacript text strings
-			$localised_data = array(
-				'upload_file' => __( 'Upload File' , 'sensei_media_attachments' ),
-				'choose_file' => __( 'Choose a file', 'sensei_media_attachments' ),
-				'add_file'    => __( 'Add file', 'sensei_media_attachments' )
-			);
-			wp_localize_script( 'sensei-media-attachments-admin', 'sensei_media_attachments_localisation', $localised_data );
-
-			// Load media uploader scripts
-			wp_enqueue_media();
-		}
-
+		// Load media uploader scripts
+		wp_enqueue_media();
 	}
 
 	/**
