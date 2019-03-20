@@ -219,6 +219,17 @@ class Sensei_Media_Attachments {
 			__( 'Lesson Media', 'sensei_media_attachments' ) :
 			__( 'Course Media', 'sensei_media_attachments' );
 
+		/**
+		 * Change the media heading title on course and lesson pages.
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param string  $media_heading Heading text for course or lesson page's attachments.
+		 * @param int     $post_id       Current post ID.
+		 * @param string  $post_type     Post type for current post.
+		 */
+		$media_heading = apply_filters( 'sensei_media_attachments_media_heading', $media_heading, $post->ID, $post_type );
+
 		$html = '<div id="attached-media">';
 		$html .= '<h2>' . esc_html( $media_heading ) . '</h2>';
 		$html .= '<ul>';
