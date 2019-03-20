@@ -74,14 +74,16 @@ class Sensei_Media_Attachments {
 
 		// Localise Javacript text strings
 		$localised_data = array(
-			'upload_file' => __( 'Upload File' , 'sensei_media_attachments' ),
-			'choose_file' => __( 'Choose a file', 'sensei_media_attachments' ),
-			'add_file'    => __( 'Add file', 'sensei_media_attachments' )
+			'upload_file' => esc_html__( 'Upload File' , 'sensei_media_attachments' ),
+			'choose_file' => esc_html__( 'Choose a file', 'sensei_media_attachments' ),
+			'add_file'    => esc_html__( 'Add file', 'sensei_media_attachments' )
 		);
 		wp_localize_script( 'sensei-media-attachments-admin', 'sensei_media_attachments_localisation', $localised_data );
 
 		// Load media uploader scripts
 		wp_enqueue_media();
+
+		wp_enqueue_style( 'sensei-media-attachments-admin', esc_url( $this->assets_url ) . 'css/admin.css', array(), SENSEI_MEDIA_ATTACHMENTS_VERSION );
 	}
 
 	/**
@@ -107,33 +109,20 @@ class Sensei_Media_Attachments {
 		$html .= '<table class="form-table" id="sensei_media_attachments">' . "\n";
 		$html .= '<tbody>' . "\n";
 
-		$c = 0;
 		if( isset( $media ) && is_array( $media ) && count( $media ) > 0 ) {
 			foreach( $media as $k => $file ) {
-				if( $c == 0 ) {
-					$html .= '<tr valign="top">' . "\n";
-				}
-				$html .= '<td><input type="button" id="sensei_media_attachments_' . esc_attr( $k ) . '_button" class="button upload_media_file_button" value="'. __( 'Upload File' , 'sensei_media_attachments' ) . '" data-uploader_title="' . __( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . __( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" type="text" id="sensei_media_attachments_' . esc_attr( $k ) . '" value="' . esc_url( $file ) . '" /></td>' . "\n";
-				$c++;
-				if( $c == 2 ) {
-					$html .= '</tr>' . "\n";
-					$c = 0;
-				}
+				$html .= '<tr valign="top">' . "\n";
+				$html .= '<td><input type="button" id="sensei_media_attachments_' . esc_attr( $k ) . '_button" class="button upload_media_file_button" value="'. esc_attr__( 'Upload File' , 'sensei_media_attachments' ) . '" data-uploader_title="' . esc_attr__( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . esc_attr__( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" class="sensei_media_attachments_file_input" type="text" id="sensei_media_attachments_' . esc_attr( $k ) . '" value="' . esc_url( $file ) . '" /></td>' . "\n";
+				$html .= '</tr>' . "\n";
 			}
 		}
 
-		if( $c == 1 ) {
-			$html .= '<td><input type="button" id="sensei_media_attachments_extra_button" class="button upload_media_file_button" value="'. __( 'Upload File' , 'sensei_media_attachments' ) . '" data-uploader_title="' . __( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . __( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" type="text" id="sensei_media_attachments_extra" value="" /></td>' . "\n";
-			$html .= '</tr>' . "\n";
-		}
-
 		$html .= '<tr valign="top">' . "\n";
-		$html .= '<td><input type="button" id="sensei_media_attachments_one_button" class="button upload_media_file_button" value="'. __( 'Upload File' , 'sensei_media_attachments' ) . '" data-uploader_title="' . __( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . __( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" type="text" id="sensei_media_attachments_one" value="" /></td>' . "\n";
-		$html .= '<td><input type="button" id="sensei_media_attachments_two_button" class="button upload_media_file_button" value="'. __( 'Upload File' , 'sensei_media_attachments' ) . '" data-uploader_title="' . __( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . __( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" type="text" id="sensei_media_attachments_two" value="" /></td>' . "\n";
+		$html .= '<td><input type="button" id="sensei_media_attachments_two_button" class="button upload_media_file_button" value="'. esc_attr__( 'Upload File' , 'sensei_media_attachments' ) . '" data-uploader_title="' . esc_attr__( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . esc_attr__( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" class="sensei_media_attachments_file_input" type="text" id="sensei_media_attachments_two" value="" /></td>' . "\n";
 		$html .= '</tr>' . "\n";
 
 		$html .= '<tr id="sensei_media_attachments_new_row" colspan="1" valign="top">' . "\n";
-		$html .= '<td><a class="button-secondary" id="sensei_media_attachments_add_row">'. __( '+ Add more files' , 'sensei_media_attachments' ) . '</a></td>' . "\n";
+		$html .= '<td><a class="button-secondary" id="sensei_media_attachments_add_row">'. esc_html__( '+ Add more files' , 'sensei_media_attachments' ) . '</a></td>' . "\n";
 		$html .= '</tr>' . "\n";
 
 		$html .= '</tbody>' . "\n";
