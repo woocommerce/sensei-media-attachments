@@ -186,6 +186,8 @@ class Sensei_Media_Attachments {
 		 * lesson page. Defaults to true only if the user has started the
 		 * course.
 		 *
+		 * @since 1.0.2
+		 *
 		 * @param bool   $show_links Whether to show the links.
 		 * @param int    $user_id    The user ID.
 		 * @param int    $post_id    The post ID.
