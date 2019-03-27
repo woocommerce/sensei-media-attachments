@@ -1,5 +1,9 @@
 *** Sensei Media Attachments Changelog ***
 
+2019.03.27 - version 1.0.2
+
+* Fix: Hide media attachment files when user is not taking the course
+
 2018.11.07 - version 1.0.1
 
 * Add: Russian translations
