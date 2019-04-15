@@ -1,8 +1,8 @@
-# Copyright (C) 2019 sensei_media_attachments
-# This file is distributed under the same license as the sensei_media_attachments package.
+# Copyright (C) 2019 Sensei Media Attachments
+# This file is distributed under the same license as the Sensei Media Attachments package.
 msgid ""
 msgstr ""
-"Project-Id-Version: sensei_media_attachments\n"
+"Project-Id-Version: Sensei Media Attachments\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
