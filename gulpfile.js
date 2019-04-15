@@ -1,48 +1,102 @@
-var gulp      = require( 'gulp' );
-var wpPot     = require( 'gulp-wp-pot' );
-var sort      = require( 'gulp-sort' );
-var del       = require( 'del' );
-var zip       = require( 'gulp-zip' );
+const { dest, parallel, series, src } = require( 'gulp' );
+const del = require( 'del' );
+const minify = require('gulp-minify');
+const sass = require( 'gulp-sass' );
+const wpPot = require( 'gulp-wp-pot' );
+const zip = require( 'gulp-zip' );
 
-var paths = {
-	packageContents: [
-		'assets/**/*',
-		'changelog.txt',
-		'LICENSE',
-		'classes/**/*',
-		'woo-includes/**/*',
-		'lang/**/*',
-		'README.md',
-		'sensei-media-attachments.php',
-	],
-	packageDir: 'build/sensei-media-attachments',
-	packageZip: 'build/sensei-media-attachments.zip'
-};
+const buildDir = 'build/sensei-media-attachments';
 
-gulp.task( 'pot', function() {
-        return gulp.src( [ '**/**.php', '!node_modules/**', '!build/**' ] )
-                .pipe( sort() )
-                .pipe( wpPot({
-                        domain: 'sensei_media_attachments'
-                }) )
-                .pipe( gulp.dest( 'lang' ) );
-});
+function clean() {
+	return del( [ 'build' ] );
+}
 
-gulp.task( 'clean', gulp.series( function( cb ) {
-	return del( [
-		'build'
-	], cb );
-} ) );
+function css() {
+	return src( 'assets/css/*.css')
+		.pipe( dest( buildDir + '/assets/css' ) )
+}
 
-gulp.task( 'copy-package', function() {
-	return gulp.src( paths.packageContents, { base: '.' } )
-		.pipe( gulp.dest( paths.packageDir ) );
-} );
+function cssMinify() {
+	return src( 'assets/css/*.css')
+		.pipe( sass( { outputStyle: 'compressed' } ) )
+		.pipe( dest( buildDir + '/assets/css' ) )
+}
 
-gulp.task( 'zip-package', function() {
-	return gulp.src( paths.packageDir + '/**/*', { base: paths.packageDir + '/..' } )
-		.pipe( zip( paths.packageZip ) )
-		.pipe( gulp.dest( '.' ) );
-} );
+function docs() {
+	return src( [ 'changelog.txt', 'README.md' ] )
+		.pipe( dest( buildDir ) )
+}
 
-gulp.task( 'package', gulp.series( 'clean', 'copy-package', 'zip-package' ) );
+function js() {
+	return src( 'assets/js/*.js')
+		.pipe( dest( buildDir + '/assets/js' ) )
+}
+
+function jsMinify() {
+	return src( 'assets/js/*.js')
+		.pipe( minify( {
+			ext:{ min:'.js' },
+			noSource: true
+		} ) )
+		.pipe( dest( buildDir + '/assets/js' ) )
+}
+
+function languages() {
+	return src( 'lang/*.*', { base: '.' } )
+		.pipe( dest( buildDir ) );
+}
+
+function php() {
+	return src( [ 'sensei-media-attachments.php', 'classes/**/*.php' ], { base: '.' } )
+		.pipe( dest( buildDir ) )
+}
+
+function pot() {
+	return src( [ 'sensei-media-attachments.php', 'classes/**/*.php' ] )
+		.pipe( wpPot( {
+			domain: 'sensei_media_attachments',
+			package: 'Sensei Media Attachments',
+		} ) )
+		.pipe( dest( 'lang/' ) );
+}
+
+function zipFiles() {
+	return src( buildDir + '/**/*', { base: buildDir + '/..' } )
+		.pipe( zip( buildDir + '.zip' ) )
+		.pipe( dest( '.' ) );
+}
+
+exports.clean = clean;
+exports.css = css;
+exports.docs = docs;
+exports.js = js;
+exports.languages = languages;
+exports.php = php;
+exports.pot = pot;
+exports.zipFiles = zipFiles;
+
+if ( process.env.NODE_ENV === 'dev' ) {
+	exports.package = series(
+		clean,
+		parallel(
+			css,
+			docs,
+			js,
+			series( pot, languages ),
+			php,
+		),
+		zipFiles,
+	);
+} else {
+	exports.package = series(
+		clean,
+		parallel(
+			cssMinify,
+			docs,
+			jsMinify,
+			series( pot, languages ),
+			php,
+		),
+		zipFiles,
+	);
+}
