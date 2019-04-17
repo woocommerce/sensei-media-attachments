@@ -57,7 +57,7 @@ function pot() {
 			domain: 'sensei_media_attachments',
 			package: 'Sensei Media Attachments',
 		} ) )
-		.pipe( dest( 'lang/' ) );
+		.pipe( dest( 'lang/sensei_media_attachments.pot' ) );
 }
 
 function zipFiles() {
