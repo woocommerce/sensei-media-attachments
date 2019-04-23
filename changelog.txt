@@ -1,6 +1,6 @@
 *** Sensei Media Attachments Changelog ***
 
-2019.03.28 - version 2.0.0
+2019.04.23 - version 2.0.0
 * New: Add dependency check for minimum Sensei (1.11.0) and PHP (5.6) versions - #39
 * New: Add `sensei_media_attachments_show_media_links` for determining whether or not to display the media attachments - #42
 * New: Add `sensei_media_attachments_get_attachment_title` filter for customizing the title that is displayed for a particular media attachment - #45
