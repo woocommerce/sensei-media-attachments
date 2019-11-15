@@ -81,7 +81,3 @@ msgstr "Lecke Média"
 #: classes/class-sensei-media-attachments.php:125
 msgid "+ Add more files"
 msgstr "+ Több fájl hozzáadása"
-
-# @ sensei_media_attachments
-#~ msgid "%s Media"
-#~ msgstr "%s Média"
