@@ -183,7 +183,7 @@ class Sensei_Media_Attachments {
 
 		$user_id    = get_current_user_id();
 		$course_id  = 'course' === $post_type ? $post->ID : get_post_meta( $post->ID, '_lesson_course', true );
-		$show_links = Sensei_Utils::user_started_course( $course_id, $user_id );
+		$show_links = Sensei_Utils::user_started_course( $course_id, $user_id ) || current_user_can( 'edit_courses' );
 
 		/**
 		 * Filter whether to display the media attachment links on the course or
