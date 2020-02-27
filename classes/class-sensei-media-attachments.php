@@ -177,13 +177,15 @@ class Sensei_Media_Attachments {
 		}
 
 		$post_type = get_post_type( $post );
-		if ( ! in_array( $post_type, array( 'course', 'lesson' ), true ) ) {
+
+		if( ! in_array( $post_type, array( 'course', 'lesson' ), true ) ) {
 			return;
 		}
 
-		$user_id    = get_current_user_id();
-		$course_id  = 'course' === $post_type ? $post->ID : get_post_meta( $post->ID, '_lesson_course', true );
-		$show_links = Sensei_Utils::user_started_course( $course_id, $user_id );
+		$user_id          = get_current_user_id();
+		$course_id        = 'course' === $post_type ? $post->ID : get_post_meta( $post->ID, '_lesson_course', true );
+		$post_type_object = get_post_type_object( $post_type );
+		$show_links       = Sensei_Utils::has_started_course( $course_id, $user_id ) || current_user_can( $post_type_object->cap->edit_post, $post->ID );
 
 		/**
 		 * Filter whether to display the media attachment links on the course or
