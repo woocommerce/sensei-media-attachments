@@ -182,10 +182,9 @@ class Sensei_Media_Attachments {
 			return;
 		}
 
-		$user_id          = get_current_user_id();
-		$course_id        = 'course' === $post_type ? $post->ID : get_post_meta( $post->ID, '_lesson_course', true );
-		$post_type_object = get_post_type_object( $post_type );
-		$show_links       = Sensei_Utils::has_started_course( $course_id, $user_id ) || current_user_can( $post_type_object->cap->edit_post, $post->ID );
+		$user_id    = get_current_user_id();
+		$course_id  = 'course' === $post_type ? $post->ID : get_post_meta( $post->ID, '_lesson_course', true );
+		$show_links = $this->user_has_access( $course_id, $user_id );
 
 		/**
 		 * Filter whether to display the media attachment links on the course or
@@ -226,6 +225,32 @@ class Sensei_Media_Attachments {
 		$html .= '</ul></div>';
 
 		echo $html; // WPCS: XSS ok.
+	}
+
+	/**
+	 * Check if user has access.
+	 *
+	 * @param int $course_id Course post ID.
+	 * @param int $user_id   User ID.
+	 *
+	 * @return bool
+	 */
+	private function user_has_access( $course_id, $user_id ) {
+		global $post;
+
+		$post_type        = get_post_type( $post );
+		$post_type_object = get_post_type_object( $post_type );
+
+		if ( current_user_can( $post_type_object->cap->edit_post, $post->ID ) ) {
+			return true;
+		}
+
+		// If we're using an older version of Sensei, use the progress method.
+		if ( ! method_exists( 'Sensei_Course', 'is_user_enrolled' ) ) {
+			return Sensei_Utils::user_started_course( $course_id, $user_id );
+		}
+
+		return Sensei_Course::is_user_enrolled( $course_id, $user_id );
 	}
 
 	/**
