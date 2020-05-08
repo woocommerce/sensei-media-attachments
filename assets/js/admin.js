@@ -19,7 +19,7 @@ jQuery(document).ready(function($) {
 
 		// When a file is selected, run a callback.
 		file_frame.on( 'select', function() {
-		  attachment = file_frame.state().get('selection').first().toJSON();
+		  var attachment = file_frame.state().get('selection').first().toJSON();
 		  jQuery("#"+field_id).val(attachment.url);
 		  if( preview_media ) {
 		  	jQuery("#"+preview_id).attr('src',attachment.url);
@@ -28,7 +28,7 @@ jQuery(document).ready(function($) {
 
 		// Open the modal
 		file_frame.open();
-	}
+	};
 
 	// Set click trigger for file upload
 	jQuery('#sensei_media_attachments').on('click', '.upload_media_file_button', function(event){
