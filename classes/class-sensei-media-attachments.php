@@ -96,8 +96,8 @@ class Sensei_Media_Attachments {
 	 * @return void
 	 */
 	public function enqueue_admin_scripts() {
-		wp_register_script( 'sensei-media-attachments-admin', esc_url( $this->assets_url . 'js/admin.js' ), array( 'jquery' ), SENSEI_MEDIA_ATTACHMENTS_VERSION );
 		// Load admin JS.
+		wp_register_script( 'sensei-media-attachments-admin', esc_url( $this->assets_url . 'js/admin.js' ), array( 'jquery' ), SENSEI_MEDIA_ATTACHMENTS_VERSION, true );
 		wp_enqueue_script( 'sensei-media-attachments-admin' );
 
 		// Localise Javacript text strings.
@@ -158,7 +158,7 @@ class Sensei_Media_Attachments {
 		$html .= '</tbody>' . "\n";
 		$html .= '</table>' . "\n";
 
-		echo $html; // WPCS: XSS ok.
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- User data escaped above.
 	}
 
 	/**
@@ -171,7 +171,10 @@ class Sensei_Media_Attachments {
 		global $post;
 
 		// Verify nonce.
-		if ( ! in_array( get_post_type(), array( 'lesson', 'course' ) ) || ! wp_verify_nonce( $_POST[ $this->token . '_nonce' ], SENSEI_MEDIA_ATTACHMENTS_PLUGIN_BASENAME ) ) {
+		if ( ! in_array( get_post_type(), array( 'lesson', 'course' ), true ) ||
+			! isset( $_POST[ $this->token . '_nonce' ] ) ||
+			// phpcs:ignore WordPress.Security.ValidatedSanitizedInput.InputNotSanitized,WordPress.Security.ValidatedSanitizedInput.MissingUnslash -- Don't transform nonce.
+			! wp_verify_nonce( $_POST[ $this->token . '_nonce' ], SENSEI_MEDIA_ATTACHMENTS_PLUGIN_BASENAME ) ) {
 			return $post_id;
 		}
 
@@ -184,9 +187,12 @@ class Sensei_Media_Attachments {
 		}
 
 		// Save array of media files.
-		if ( isset( $_POST['sensei_media_attachments'] ) && is_array( $_POST['sensei_media_attachments'] ) && count( $_POST['sensei_media_attachments'] ) > 0 ) {
+		if ( ! empty( $_POST['sensei_media_attachments'] ) && is_array( $_POST['sensei_media_attachments'] ) ) {
 			$media = array();
-			foreach ( $_POST['sensei_media_attachments'] as $k => $file ) {
+
+			$files = array_map( 'esc_url_raw', wp_unslash( (array) $_POST['sensei_media_attachments'] ) );
+
+			foreach ( $files as $k => $file ) {
 				if ( $file && strlen( $file ) > 0 ) {
 					$media[ $k ] = $file;
 				}
@@ -257,7 +263,7 @@ class Sensei_Media_Attachments {
 		}
 		$html .= '</ul></div>';
 
-		echo $html; // WPCS: XSS ok.
+		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- User data escaped above.
 	}
 
 	/**
@@ -275,7 +281,7 @@ class Sensei_Media_Attachments {
 		}
 
 		if ( empty( $attachment_title ) ) {
-			$url_path         = parse_url( $attachment_url, PHP_URL_PATH );
+			$url_path         = wp_parse_url( $attachment_url, PHP_URL_PATH );
 			$attachment_title = basename( $url_path );
 		}
 
@@ -306,6 +312,7 @@ class Sensei_Media_Attachments {
 	public function load_plugin_textdomain() {
 		$domain = 'sensei_media_attachments';
 
+		// phpcs:ignore WordPress.NamingConventions.PrefixAllGlobals.NonPrefixedHooknameFound -- Using commonly used core hook to fetch locales.
 		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
