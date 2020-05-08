@@ -1,9 +1,17 @@
 <?php
+/**
+ * Sensei Media Attachments Extension
+ *
+ * @package sensei-media-attachments
+ */
 
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
+/**
+ * Sensei Media Attachment Extension main class.
+ */
 class Sensei_Media_Attachments {
 	/**
 	 * The single instance of self.
@@ -15,8 +23,25 @@ class Sensei_Media_Attachments {
 	 */
 	private static $instance = null;
 
+	/**
+	 * Assets directory path.
+	 *
+	 * @var string
+	 */
 	private $assets_dir;
+
+	/**
+	 * Assets directory public URL.
+	 *
+	 * @var string
+	 */
 	private $assets_url;
+
+	/**
+	 * Plugin prefix.
+	 *
+	 * @var string
+	 */
 	private $token;
 
 	/**
@@ -48,10 +73,10 @@ class Sensei_Media_Attachments {
 
 		add_action( 'init', array( $instance, 'frontend_hooks' ), 15 );
 
-		// Admin JS
+		// Admin JS.
 		add_action( 'admin_enqueue_scripts', array( $instance, 'enqueue_admin_scripts' ), 10 );
 
-		// Meta boxes
+		// Meta boxes.
 		add_action( 'add_meta_boxes', array( $instance, 'add_media_meta_box' ) );
 		add_action( 'save_post', array( $instance, 'save_media_meta_box' ) );
 	}
@@ -71,11 +96,11 @@ class Sensei_Media_Attachments {
 	 * @return void
 	 */
 	public function enqueue_admin_scripts() {
-		// Load admin JS
 		wp_register_script( 'sensei-media-attachments-admin', esc_url( $this->assets_url . 'js/admin.js' ), array( 'jquery' ), SENSEI_MEDIA_ATTACHMENTS_VERSION );
+		// Load admin JS.
 		wp_enqueue_script( 'sensei-media-attachments-admin' );
 
-		// Localise Javacript text strings
+		// Localise Javacript text strings.
 		$localised_data = array(
 			'upload_file' => esc_html__( 'Upload File', 'sensei_media_attachments' ),
 			'choose_file' => esc_html__( 'Choose a file', 'sensei_media_attachments' ),
@@ -83,7 +108,7 @@ class Sensei_Media_Attachments {
 		);
 		wp_localize_script( 'sensei-media-attachments-admin', 'sensei_media_attachments_localisation', $localised_data );
 
-		// Load media uploader scripts
+		// Load media uploader scripts.
 		wp_enqueue_media();
 
 		wp_enqueue_style( 'sensei-media-attachments-admin', esc_url( $this->assets_url ) . 'css/admin.css', array(), SENSEI_MEDIA_ATTACHMENTS_VERSION );
@@ -139,26 +164,26 @@ class Sensei_Media_Attachments {
 	/**
 	 * Save meta box content
 	 *
-	 * @param  int $post_id ID of post
-	 * @return void
+	 * @param  int $post_id ID of post.
+	 * @return int|void
 	 */
 	public function save_media_meta_box( $post_id ) {
 		global $post;
 
-		// Verify nonce
+		// Verify nonce.
 		if ( ! in_array( get_post_type(), array( 'lesson', 'course' ) ) || ! wp_verify_nonce( $_POST[ $this->token . '_nonce' ], SENSEI_MEDIA_ATTACHMENTS_PLUGIN_BASENAME ) ) {
 			return $post_id;
 		}
 
-		// Get post type object
+		// Get post type object.
 		$post_type = get_post_type_object( $post->post_type );
 
-		// Check if the current user has permission to edit the post
+		// Check if the current user has permission to edit the post.
 		if ( ! current_user_can( $post_type->cap->edit_post, $post_id ) ) {
 			return $post_id;
 		}
 
-		// Save array of media files
+		// Save array of media files.
 		if ( isset( $_POST['sensei_media_attachments'] ) && is_array( $_POST['sensei_media_attachments'] ) && count( $_POST['sensei_media_attachments'] ) > 0 ) {
 			$media = array();
 			foreach ( $_POST['sensei_media_attachments'] as $k => $file ) {

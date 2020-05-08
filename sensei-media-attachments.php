@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Plugin Name: Sensei Media Attachments
  * Version: 2.0.0
  * Plugin URI: https://woocommerce.com/products/sensei-media-attachments/
@@ -11,7 +11,7 @@
  * Requires PHP: 5.6
  * Woo: 290551:788647a9a1d8ef5c95371f0e69223a0f
  *
- * @package WordPress
+ * @package sensei-media-attachments
  * @author Automattic
  * @since 1.0.0
  */
