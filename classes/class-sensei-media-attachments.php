@@ -1,6 +1,8 @@
 <?php
 
-if ( ! defined( 'ABSPATH' ) ) exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 class Sensei_Media_Attachments {
 	/**
@@ -23,7 +25,7 @@ class Sensei_Media_Attachments {
 	private function __construct() {
 		$this->assets_dir = trailingslashit( dirname( SENSEI_MEDIA_ATTACHMENTS_PLUGIN_FILE ) ) . 'assets';
 		$this->assets_url = esc_url( trailingslashit( plugins_url( '/assets/', SENSEI_MEDIA_ATTACHMENTS_PLUGIN_FILE ) ) );
-		$this->token = 'sensei_media_attachments';
+		$this->token      = 'sensei_media_attachments';
 
 		$this->load_plugin_textdomain();
 	}
@@ -47,7 +49,7 @@ class Sensei_Media_Attachments {
 		add_action( 'init', array( $instance, 'frontend_hooks' ), 15 );
 
 		// Admin JS
-		add_action( 'admin_enqueue_scripts' , array( $instance, 'enqueue_admin_scripts' ) , 10 );
+		add_action( 'admin_enqueue_scripts', array( $instance, 'enqueue_admin_scripts' ), 10 );
 
 		// Meta boxes
 		add_action( 'add_meta_boxes', array( $instance, 'add_media_meta_box' ) );
@@ -65,18 +67,19 @@ class Sensei_Media_Attachments {
 
 	/**
 	 * Load admin JS
+	 *
 	 * @return void
 	 */
-	public function enqueue_admin_scripts () {
+	public function enqueue_admin_scripts() {
 		// Load admin JS
 		wp_register_script( 'sensei-media-attachments-admin', esc_url( $this->assets_url . 'js/admin.js' ), array( 'jquery' ), SENSEI_MEDIA_ATTACHMENTS_VERSION );
 		wp_enqueue_script( 'sensei-media-attachments-admin' );
 
 		// Localise Javacript text strings
 		$localised_data = array(
-			'upload_file' => esc_html__( 'Upload File' , 'sensei_media_attachments' ),
+			'upload_file' => esc_html__( 'Upload File', 'sensei_media_attachments' ),
 			'choose_file' => esc_html__( 'Choose a file', 'sensei_media_attachments' ),
-			'add_file'    => esc_html__( 'Add file', 'sensei_media_attachments' )
+			'add_file'    => esc_html__( 'Add file', 'sensei_media_attachments' ),
 		);
 		wp_localize_script( 'sensei-media-attachments-admin', 'sensei_media_attachments_localisation', $localised_data );
 
@@ -88,6 +91,7 @@ class Sensei_Media_Attachments {
 
 	/**
 	 * Add metaboxes to course and lesson edit pages
+	 *
 	 * @return void
 	 */
 	public function add_media_meta_box() {
@@ -97,6 +101,7 @@ class Sensei_Media_Attachments {
 
 	/**
 	 * Load meta box content
+	 *
 	 * @return void
 	 */
 	public function media_meta_box() {
@@ -109,20 +114,20 @@ class Sensei_Media_Attachments {
 		$html .= '<table class="form-table" id="sensei_media_attachments">' . "\n";
 		$html .= '<tbody>' . "\n";
 
-		if( isset( $media ) && is_array( $media ) && count( $media ) > 0 ) {
-			foreach( $media as $k => $file ) {
+		if ( isset( $media ) && is_array( $media ) && count( $media ) > 0 ) {
+			foreach ( $media as $k => $file ) {
 				$html .= '<tr valign="top">' . "\n";
-				$html .= '<td><input type="button" id="sensei_media_attachments_' . esc_attr( $k ) . '_button" class="button upload_media_file_button" value="'. esc_attr__( 'Upload File' , 'sensei_media_attachments' ) . '" data-uploader_title="' . esc_attr__( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . esc_attr__( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" class="sensei_media_attachments_file_input" type="text" id="sensei_media_attachments_' . esc_attr( $k ) . '" value="' . esc_url( $file ) . '" /></td>' . "\n";
+				$html .= '<td><input type="button" id="sensei_media_attachments_' . esc_attr( $k ) . '_button" class="button upload_media_file_button" value="' . esc_attr__( 'Upload File', 'sensei_media_attachments' ) . '" data-uploader_title="' . esc_attr__( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . esc_attr__( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" class="sensei_media_attachments_file_input" type="text" id="sensei_media_attachments_' . esc_attr( $k ) . '" value="' . esc_url( $file ) . '" /></td>' . "\n";
 				$html .= '</tr>' . "\n";
 			}
 		}
 
 		$html .= '<tr valign="top">' . "\n";
-		$html .= '<td><input type="button" id="sensei_media_attachments_two_button" class="button upload_media_file_button" value="'. esc_attr__( 'Upload File' , 'sensei_media_attachments' ) . '" data-uploader_title="' . esc_attr__( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . esc_attr__( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" class="sensei_media_attachments_file_input" type="text" id="sensei_media_attachments_two" value="" /></td>' . "\n";
+		$html .= '<td><input type="button" id="sensei_media_attachments_two_button" class="button upload_media_file_button" value="' . esc_attr__( 'Upload File', 'sensei_media_attachments' ) . '" data-uploader_title="' . esc_attr__( 'Choose a file', 'sensei_media_attachments' ) . '" data-uploader_button_text="' . esc_attr__( 'Add file', 'sensei_media_attachments' ) . '" /> <input name="sensei_media_attachments[]" class="sensei_media_attachments_file_input" type="text" id="sensei_media_attachments_two" value="" /></td>' . "\n";
 		$html .= '</tr>' . "\n";
 
 		$html .= '<tr id="sensei_media_attachments_new_row" colspan="1" valign="top">' . "\n";
-		$html .= '<td><a class="button-secondary" id="sensei_media_attachments_add_row">'. esc_html__( '+ Add more files' , 'sensei_media_attachments' ) . '</a></td>' . "\n";
+		$html .= '<td><a class="button-secondary" id="sensei_media_attachments_add_row">' . esc_html__( '+ Add more files', 'sensei_media_attachments' ) . '</a></td>' . "\n";
 		$html .= '</tr>' . "\n";
 
 		$html .= '</tbody>' . "\n";
@@ -133,6 +138,7 @@ class Sensei_Media_Attachments {
 
 	/**
 	 * Save meta box content
+	 *
 	 * @param  int $post_id ID of post
 	 * @return void
 	 */
@@ -153,10 +159,10 @@ class Sensei_Media_Attachments {
 		}
 
 		// Save array of media files
-		if( isset( $_POST['sensei_media_attachments'] ) && is_array( $_POST['sensei_media_attachments'] ) && count( $_POST['sensei_media_attachments'] ) > 0 ) {
+		if ( isset( $_POST['sensei_media_attachments'] ) && is_array( $_POST['sensei_media_attachments'] ) && count( $_POST['sensei_media_attachments'] ) > 0 ) {
 			$media = array();
-			foreach( $_POST['sensei_media_attachments'] as $k => $file ) {
-				if( $file && strlen( $file ) > 0 ) {
+			foreach ( $_POST['sensei_media_attachments'] as $k => $file ) {
+				if ( $file && strlen( $file ) > 0 ) {
 					$media[ $k ] = $file;
 				}
 			}
@@ -166,19 +172,20 @@ class Sensei_Media_Attachments {
 
 	/**
 	 * Display attached media files on single lesson & course pages
+	 *
 	 * @return void
 	 */
 	public function display_attached_media() {
 		global $post;
 
 		$media = get_post_meta( $post->ID, '_attached_media', true );
-		if( ! is_array( $media ) || 0 === count( $media ) ) {
+		if ( ! is_array( $media ) || 0 === count( $media ) ) {
 			return;
 		}
 
 		$post_type = get_post_type( $post );
 
-		if( ! in_array( $post_type, array( 'course', 'lesson' ), true ) ) {
+		if ( ! in_array( $post_type, array( 'course', 'lesson' ), true ) ) {
 			return;
 		}
 
@@ -216,12 +223,12 @@ class Sensei_Media_Attachments {
 		 */
 		$media_heading = apply_filters( 'sensei_media_attachments_media_heading', $media_heading, $post->ID, $post_type );
 
-		$html = '<div id="attached-media">';
+		$html  = '<div id="attached-media">';
 		$html .= '<h2>' . esc_html( $media_heading ) . '</h2>';
 		$html .= '<ul>';
-		foreach( $media as $k => $file ) {
+		foreach ( $media as $k => $file ) {
 			$attachment_label = $this->get_attachment_title( $file );
-			$html .= '<li id="attached_media_' . esc_attr( $k ) . '"><a href="' . esc_url( $file ) . '" target="_blank">' . esc_html( $attachment_label ) . '</a></li>';
+			$html            .= '<li id="attached_media_' . esc_attr( $k ) . '"><a href="' . esc_url( $file ) . '" target="_blank">' . esc_html( $attachment_label ) . '</a></li>';
 		}
 		$html .= '</ul></div>';
 
@@ -262,7 +269,7 @@ class Sensei_Media_Attachments {
 	 *
 	 * @return void
 	 */
-	public function load_localisation () {
+	public function load_localisation() {
 		load_plugin_textdomain( 'sensei_media_attachments', false, dirname( SENSEI_MEDIA_ATTACHMENTS_PLUGIN_BASENAME ) . '/lang/' );
 	}
 
@@ -271,10 +278,10 @@ class Sensei_Media_Attachments {
 	 *
 	 * @return void
 	 */
-	public function load_plugin_textdomain () {
+	public function load_plugin_textdomain() {
 		$domain = 'sensei_media_attachments';
 
-		$locale = apply_filters( 'plugin_locale' , get_locale() , $domain );
+		$locale = apply_filters( 'plugin_locale', get_locale(), $domain );
 
 		load_textdomain( $domain, WP_LANG_DIR . '/' . $domain . '/' . $domain . '-' . $locale . '.mo' );
 		load_plugin_textdomain( $domain, false, dirname( SENSEI_MEDIA_ATTACHMENTS_PLUGIN_BASENAME ) . '/lang/' );

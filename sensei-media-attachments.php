@@ -33,6 +33,6 @@ if ( ! Sensei_Media_Attachments_Dependency_Checker::are_system_dependencies_met(
 require_once dirname( __FILE__ ) . '/classes/class-sensei-media-attachments.php';
 
 // Load the plugin after all the other plugins have loaded.
-add_action( 'plugins_loaded', array( 'Sensei_Media_Attachments', 'init' ), 5 ) ;
+add_action( 'plugins_loaded', array( 'Sensei_Media_Attachments', 'init' ), 5 );
 
 Sensei_Media_Attachments::instance();
