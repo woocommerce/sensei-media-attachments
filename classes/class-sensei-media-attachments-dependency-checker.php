@@ -1,4 +1,10 @@
 <?php
+/**
+ * Sensei Media Attachments Extension Dependencies Check.
+ *
+ * @package sensei-media-attachments
+ */
+
 if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }

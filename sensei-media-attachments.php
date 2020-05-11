@@ -1,5 +1,5 @@
 <?php
-/*
+/**
  * Plugin Name: Sensei Media Attachments
  * Version: 2.0.0
  * Plugin URI: https://woocommerce.com/products/sensei-media-attachments/
@@ -11,7 +11,7 @@
  * Requires PHP: 5.6
  * Woo: 290551:788647a9a1d8ef5c95371f0e69223a0f
  *
- * @package WordPress
+ * @package sensei-media-attachments
  * @author Automattic
  * @since 1.0.0
  */
@@ -33,6 +33,6 @@ if ( ! Sensei_Media_Attachments_Dependency_Checker::are_system_dependencies_met(
 require_once dirname( __FILE__ ) . '/classes/class-sensei-media-attachments.php';
 
 // Load the plugin after all the other plugins have loaded.
-add_action( 'plugins_loaded', array( 'Sensei_Media_Attachments', 'init' ), 5 ) ;
+add_action( 'plugins_loaded', array( 'Sensei_Media_Attachments', 'init' ), 5 );
 
 Sensei_Media_Attachments::instance();
