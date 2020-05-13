@@ -55,7 +55,7 @@ function pot() {
 	return src( [ 'sensei-media-attachments.php', 'classes/**/*.php' ] )
 		.pipe( wpPot( {
 			domain: 'sensei_media_attachments',
-			package: 'Sensei Media Attachments',
+			package: 'Sensei LMS Media Attachments',
 		} ) )
 		.pipe( dest( 'lang/sensei_media_attachments.pot' ) );
 }

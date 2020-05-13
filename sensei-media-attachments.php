@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Sensei Media Attachments
+ * Plugin Name: Sensei LMS Media Attachments
  * Version: 2.0.0
  * Plugin URI: https://woocommerce.com/products/sensei-media-attachments/
  * Description: Provide your students with easy access to additional learning materials, from audio files to slideshows and PDFs.
