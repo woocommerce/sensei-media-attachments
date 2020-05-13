@@ -1,5 +1,11 @@
 *** Changelog ***
 
+2020.05.13 - version 2.0.1
+
+* New: Add Hungarian translation (@amroland) - #64
+* Fix: Show media attachments on lesson pages for admins - #71
+* Fix: Improve compatibility for Sensei 3 and legacy versions - #76
+
 2019.04.23 - version 2.0.0
 
 * New: Add dependency check for minimum Sensei (1.11.0) and PHP (5.6) versions - #39
