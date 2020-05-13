@@ -23,7 +23,7 @@ function cssMinify() {
 }
 
 function docs() {
-	return src( [ 'changelog.txt', 'README.md' ] )
+	return src( [ 'changelog.txt', 'readme.txt' ] )
 		.pipe( dest( buildDir ) )
 }
 
@@ -55,7 +55,7 @@ function pot() {
 	return src( [ 'sensei-media-attachments.php', 'classes/**/*.php' ] )
 		.pipe( wpPot( {
 			domain: 'sensei_media_attachments',
-			package: 'Sensei Media Attachments',
+			package: 'Sensei LMS Media Attachments',
 		} ) )
 		.pipe( dest( 'lang/sensei_media_attachments.pot' ) );
 }

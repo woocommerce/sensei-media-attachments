@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-<!-- Thanks for contributing to Sensei Media Attachments! Pick a clear title ("Lesson: Show complexity in individual lessons") and proceed. -->
+<!-- Thanks for contributing to Sensei LMS Media Attachments! Pick a clear title ("Lesson: Show complexity in individual lessons") and proceed. -->
 
 ### Steps to Reproduce
 1. Go to '...'
@@ -21,7 +21,7 @@ assignees: ''
 ### What Happened Instead
 
 
-### PHP / WordPress / Sensei Media Attachments / Sensei LMS version
+### PHP / WordPress / Sensei LMS Media Attachments / Sensei LMS version
 
 
 ### Browser / OS version

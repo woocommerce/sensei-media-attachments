@@ -10,7 +10,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Sensei Media Attachments Extension Dependencies Check
+ * Sensei LMS Media Attachments Extension Dependencies Check
  *
  * @since 2.0.0
  */
@@ -94,7 +94,7 @@ class Sensei_Media_Attachments_Dependency_Checker {
 		}
 
 		// translators: %1$s is version of PHP that this plugin requires; %2$s is the version of PHP WordPress is running on.
-		$message = sprintf( __( '<strong>Sensei Media Attachments</strong> requires a minimum PHP version of %1$s, but you are running %2$s.', 'sensei_media_attachments' ), self::MINIMUM_PHP_VERSION, phpversion() );
+		$message = sprintf( __( '<strong>Sensei LMS Media Attachments</strong> requires a minimum PHP version of %1$s, but you are running %2$s.', 'sensei_media_attachments' ), self::MINIMUM_PHP_VERSION, phpversion() );
 		echo '<div class="error"><p>';
 		echo wp_kses( $message, array( 'strong' => array() ) );
 		$php_update_url = 'https://wordpress.org/support/update-php/';
@@ -125,7 +125,7 @@ class Sensei_Media_Attachments_Dependency_Checker {
 		}
 
 		// translators: %1$s is the minimum version number of Sensei that is required.
-		$message = sprintf( __( '<strong>Sensei Media Attachments</strong> requires that the plugin <strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) is installed and activated.', 'sensei_media_attachments' ), self::MINIMUM_SENSEI_VERSION );
+		$message = sprintf( __( '<strong>Sensei LMS Media Attachments</strong> requires that the plugin <strong>Sensei</strong> (minimum version: <strong>%1$s</strong>) is installed and activated.', 'sensei_media_attachments' ), self::MINIMUM_SENSEI_VERSION );
 		echo '<div class="error"><p>';
 		echo wp_kses( $message, array( 'strong' => array() ) );
 		echo '</p></div>';

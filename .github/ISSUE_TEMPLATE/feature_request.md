@@ -7,7 +7,7 @@ assignees: ''
 
 ---
 
-<!-- Thanks for contributing to Sensei Media Attachments! Pick a clear title ("Lesson: Show complexity in individual lessons") and proceed. -->
+<!-- Thanks for contributing to Sensei LMS Media Attachments! Pick a clear title ("Lesson: Show complexity in individual lessons") and proceed. -->
 
 ### Is your feature request related to a problem? Please describe
 A clear and concise description of what the problem is. Ex. I'm always frustrated when [...]
