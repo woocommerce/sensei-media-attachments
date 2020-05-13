@@ -7,7 +7,7 @@
  * Author: Automattic
  * Author URI: https://automattic.com/
  * Requires at least: 3.5
- * Tested up to: 5.1
+ * Tested up to: 5.4
  * Requires PHP: 5.6
  *
  * @package sensei-media-attachments
