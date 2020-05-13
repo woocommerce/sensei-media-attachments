@@ -9,7 +9,6 @@
  * Requires at least: 3.5
  * Tested up to: 5.1
  * Requires PHP: 5.6
- * Woo: 290551:788647a9a1d8ef5c95371f0e69223a0f
  *
  * @package sensei-media-attachments
  * @author Automattic
