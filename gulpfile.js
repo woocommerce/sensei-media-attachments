@@ -54,10 +54,10 @@ function php() {
 function pot() {
 	return src( [ 'sensei-media-attachments.php', 'classes/**/*.php' ] )
 		.pipe( wpPot( {
-			domain: 'sensei_media_attachments',
+			domain: 'sensei-media-attachments',
 			package: 'Sensei LMS Media Attachments',
 		} ) )
-		.pipe( dest( 'lang/sensei_media_attachments.pot' ) );
+		.pipe( dest( 'lang/sensei-media-attachments.pot' ) );
 }
 
 function zipFiles() {
