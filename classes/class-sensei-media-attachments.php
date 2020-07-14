@@ -222,7 +222,7 @@ class Sensei_Media_Attachments {
 
 		$user_id    = get_current_user_id();
 		$course_id  = 'course' === $post_type ? $post->ID : get_post_meta( $post->ID, '_lesson_course', true );
-		$show_links = $this->user_has_access( $course_id, $user_id );
+		$show_links = self::user_has_access( $course_id, $user_id );
 
 		/**
 		 * Filter whether to display the media attachment links on the course or
@@ -257,7 +257,7 @@ class Sensei_Media_Attachments {
 		$html .= '<h2>' . esc_html( $media_heading ) . '</h2>';
 		$html .= '<ul>';
 		foreach ( $media as $k => $file ) {
-			$attachment_label = $this->get_attachment_title( $file );
+			$attachment_label = self::get_attachment_title( $file );
 			$html            .= '<li id="attached_media_' . esc_attr( $k ) . '"><a href="' . esc_url( $file ) . '" target="_blank">' . esc_html( $attachment_label ) . '</a></li>';
 		}
 		$html .= '</ul></div>';
