@@ -44,11 +44,11 @@ msgstr ""
 msgid "Add file"
 msgstr ""
 
-#: classes/class-sensei-media-attachments.php:123
+#: classes/class-sensei-media-attachments.php:123, classes/class-sensei-media-attachments.php:243
 msgid "Course Media"
 msgstr ""
 
-#: classes/class-sensei-media-attachments.php:124
+#: classes/class-sensei-media-attachments.php:124, classes/class-sensei-media-attachments.php:242
 msgid "Lesson Media"
 msgstr ""
 
