@@ -1,12 +1,12 @@
 <?php
 /**
  * Plugin Name: Sensei LMS Media Attachments
- * Version: 2.0.1
+ * Version: 2.0.2
  * Plugin URI: https://woocommerce.com/products/sensei-media-attachments/
  * Description: Provide your students with easy access to additional learning materials, from audio files to slideshows and PDFs.
  * Author: Automattic
  * Author URI: https://automattic.com/
- * Requires at least: 3.5
+ * Requires at least: 5.0
  * Tested up to: 5.4
  * Requires PHP: 5.6
  *
@@ -19,7 +19,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-define( 'SENSEI_MEDIA_ATTACHMENTS_VERSION', '2.0.1' );
+define( 'SENSEI_MEDIA_ATTACHMENTS_VERSION', '2.0.2' );
 define( 'SENSEI_MEDIA_ATTACHMENTS_PLUGIN_FILE', __FILE__ );
 define( 'SENSEI_MEDIA_ATTACHMENTS_PLUGIN_BASENAME', plugin_basename( __FILE__ ) );
 

@@ -1,5 +1,9 @@
 *** Changelog ***
 
+2020.07.20 - version 2.0.2
+
+* Fix: Change text domain to match plugin slug - #82
+
 2020.05.13 - version 2.0.1
 
 * New: Add Hungarian translation (@amroland) - #64
