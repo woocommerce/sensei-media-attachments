@@ -49,7 +49,7 @@ class Sensei_Media_Attachments {
 	 */
 	private function __construct() {
 		$this->assets_dir = trailingslashit( dirname( SENSEI_MEDIA_ATTACHMENTS_PLUGIN_FILE ) ) . 'assets';
-		$this->assets_url = esc_url( trailingslashit( plugins_url( '/assets/', SENSEI_MEDIA_ATTACHMENTS_PLUGIN_FILE ) ) );
+		$this->assets_url = esc_url( trailingslashit( plugins_url( '/assets/dist/', SENSEI_MEDIA_ATTACHMENTS_PLUGIN_FILE ) ) );
 		$this->token      = 'sensei_media_attachments';
 
 		$this->load_plugin_textdomain();
