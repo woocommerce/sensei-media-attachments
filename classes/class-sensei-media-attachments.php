@@ -238,6 +238,15 @@ class Sensei_Media_Attachments {
 			return;
 		}
 
+		// Don't show media attachments if lesson hasn't dripped yet.
+		if ( 'lesson' === $post_type && method_exists( 'Scd_Ext_Access_Control', 'is_lesson_access_blocked' ) ) {
+			$access_control = new Scd_Ext_Access_Control();
+
+			if ( $access_control->is_lesson_access_blocked( $post->ID ) ) {
+				return;
+			}
+		}
+
 		$media_heading = ( 'lesson' === $post_type ) ?
 			__( 'Lesson Media', 'sensei-media-attachments' ) :
 			__( 'Course Media', 'sensei-media-attachments' );
