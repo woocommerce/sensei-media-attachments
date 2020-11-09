@@ -87,7 +87,7 @@ class Sensei_Media_Attachments {
 	public function frontend_hooks() {
 		// Media files display.
 		add_action( 'sensei_single_lesson_content_inside_after', array( $this, 'display_attached_media' ), 35 );
-		add_action( 'sensei_single_course_content_inside_before', array( $this, 'display_attached_media' ), 35 );
+		add_filter( 'the_content', array( $this, 'single_course_prepend_attached_media' ), 35 );
 	}
 
 	/**
@@ -272,6 +272,34 @@ class Sensei_Media_Attachments {
 		$html .= '</ul></div>';
 
 		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- User data escaped above.
+	}
+
+	/**
+	 * Prepend the attached media links to the content for the Single Course
+	 * page. To be used with the `the_content` filter.
+	 *
+	 * @access private
+	 * @since 2.0.3
+	 *
+	 * @param string $content The original post content.
+	 *
+	 * @return string The new post content with the attached media links prepended.
+	 */
+	public function single_course_prepend_attached_media( $content ) {
+		global $post;
+
+		if ( ! is_singular( 'course' ) ) {
+			return $content;
+		}
+
+		// Ensure that this is only done once on unsupported themes.
+		remove_filter( 'the_content', array( $this, 'single_course_prepend_attached_media' ), 35 );
+
+		ob_start();
+		$this->display_attached_media();
+		$attached_media_content = ob_get_clean();
+
+		return $attached_media_content . "\n" . $content;
 	}
 
 	/**
