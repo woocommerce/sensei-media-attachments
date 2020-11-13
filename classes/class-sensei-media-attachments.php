@@ -87,6 +87,7 @@ class Sensei_Media_Attachments {
 	public function frontend_hooks() {
 		// Media files display.
 		add_action( 'sensei_single_lesson_content_inside_after', array( $this, 'display_attached_media' ), 35 );
+		add_action( 'sensei_single_course_content_inside_before', array( $this, 'display_attached_media' ), 35 );
 		add_filter( 'the_content', array( $this, 'single_course_prepend_attached_media' ), 35 );
 	}
 
@@ -209,15 +210,58 @@ class Sensei_Media_Attachments {
 	public function display_attached_media() {
 		global $post;
 
+		// Do not use this method if we are prepending to `the_content`.
+		if ( $this->should_prepend_to_the_content() ) {
+			return;
+		}
+
+		echo $this->get_attached_media_html();
+	}
+
+	/**
+	 * Prepend the attached media links to the content for the Single Course
+	 * page. To be used with the `the_content` filter.
+	 *
+	 * @access private
+	 * @since 2.0.3
+	 *
+	 * @param string $content The original post content.
+	 *
+	 * @return string The new post content with the attached media links prepended.
+	 */
+	public function single_course_prepend_attached_media( $content ) {
+		global $post;
+
+		if ( ! $this->should_prepend_to_the_content() ) {
+			return $content;
+		}
+
+		// Ensure that this is only done once on unsupported themes.
+		remove_filter( 'the_content', array( $this, 'single_course_prepend_attached_media' ), 35 );
+
+		$attached_media_content = $this->get_attached_media_html();
+
+		return $attached_media_content . "\n" . $content;
+	}
+
+	/**
+	 * Get HTML for displaying attached media files on single lesson & course
+	 * pages.
+	 *
+	 * @return string
+	 */
+	private function get_attached_media_html() {
+		global $post;
+
 		$media = get_post_meta( $post->ID, '_attached_media', true );
 		if ( ! is_array( $media ) || 0 === count( $media ) ) {
-			return;
+			return '';
 		}
 
 		$post_type = get_post_type( $post );
 
 		if ( ! in_array( $post_type, array( 'course', 'lesson' ), true ) ) {
-			return;
+			return '';
 		}
 
 		$user_id    = get_current_user_id();
@@ -235,7 +279,7 @@ class Sensei_Media_Attachments {
 		 * @param string $post_type  Either "course" or "lesson".
 		 */
 		if ( ! apply_filters( 'sensei_media_attachments_show_media_links', $show_links, $user_id, $post->ID, $post_type ) ) {
-			return;
+			return '';
 		}
 
 		// Don't show media attachments if lesson hasn't dripped yet.
@@ -243,7 +287,7 @@ class Sensei_Media_Attachments {
 			$access_control = new Scd_Ext_Access_Control();
 
 			if ( $access_control->is_lesson_access_blocked( $post->ID ) ) {
-				return;
+				return '';
 			}
 		}
 
@@ -271,35 +315,38 @@ class Sensei_Media_Attachments {
 		}
 		$html .= '</ul></div>';
 
-		echo $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- User data escaped above.
+		return $html; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- User data escaped above.
 	}
 
 	/**
-	 * Prepend the attached media links to the content for the Single Course
-	 * page. To be used with the `the_content` filter.
+	 * Check whether we should prepend the media attachment links to the content
+	 * using the `the_content` filter instead of the custom hook within Sensei's
+	 * Single Course template.
 	 *
-	 * @access private
 	 * @since 2.0.3
 	 *
-	 * @param string $content The original post content.
-	 *
-	 * @return string The new post content with the attached media links prepended.
+	 * @return bool
 	 */
-	public function single_course_prepend_attached_media( $content ) {
+	private function should_prepend_to_the_content() {
 		global $post;
 
-		if ( ! is_singular( 'course' ) ) {
-			return $content;
+		$is_legacy_course = true;
+		if ( method_exists( Sensei()->course, 'is_legacy_course' ) ) {
+			$is_legacy_course = Sensei()->course->is_legacy_course( $post );
 		}
 
-		// Ensure that this is only done once on unsupported themes.
-		remove_filter( 'the_content', array( $this, 'single_course_prepend_attached_media' ), 35 );
+		$should_prepend_to_the_content = is_singular( 'course' ) && ! $is_legacy_course;
 
-		ob_start();
-		$this->display_attached_media();
-		$attached_media_content = ob_get_clean();
-
-		return $attached_media_content . "\n" . $content;
+		/**
+		 * Change whether the media attachment link HTML should be prepended
+		 * to `the_content` rather than using Sensei's custom hooks.
+		 *
+		 * @since 2.0.3
+		 *
+		 * @param bool    $should_prepend_to_the_content Whether we should prepend the HTML to `the_content`.
+		 * @param WP_Post $post                          The current post.
+		 */
+		return apply_filters( 'sensei_media_attachments_should_prepend_to_the_content', $should_prepend_to_the_content, $post );
 	}
 
 	/**
