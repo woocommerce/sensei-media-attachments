@@ -6,8 +6,8 @@
  * Description: Provide your students with easy access to additional learning materials, from audio files to slideshows and PDFs.
  * Author: Automattic
  * Author URI: https://automattic.com/
- * Requires at least: 5.0
- * Tested up to: 5.4
+ * Requires at least: 5.3
+ * Tested up to: 5.5
  * Requires PHP: 5.6
  *
  * @package sensei-media-attachments
