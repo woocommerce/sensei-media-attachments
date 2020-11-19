@@ -1,6 +1,6 @@
 *** Changelog ***
 
-2020.11.18 - version 2.0.3
+2020.11.19 - version 2.0.3
 
 * Tweak: Ensure attached media displays on single course page that is not using Sensei custom template - #97
 * Tweak: Switch to webpack via wordpress-scripts and simplify build - #88
