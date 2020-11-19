@@ -1,5 +1,11 @@
 *** Changelog ***
 
+2020.11.19 - version 2.0.3
+
+* Tweak: Ensure attached media displays on single course page that is not using Sensei custom template - #97
+* Tweak: Switch to webpack via wordpress-scripts and simplify build - #88
+* Fix: Don't show media attachments if lesson hasn't dripped yet - #94
+
 2020.07.20 - version 2.0.2
 
 * Fix: Change text domain to match plugin slug - #82
