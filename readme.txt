@@ -1,8 +1,8 @@
 === Sensei LMS Media Attachments ===
 Contributors: automattic, alexsanford1, donnapep, jakeom
 Tags: sensei lms, attachments, media, downloads
-Requires at least: 5.3
-Tested up to: 5.5
+Requires at least: 5.4
+Tested up to: 5.6
 Requires PHP: 7.0
 Stable tag: 2.0.3
 License: GPLv2 or later
