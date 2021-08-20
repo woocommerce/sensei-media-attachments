@@ -1,5 +1,9 @@
 *** Changelog ***
 
+2021.08.22 - version 2.0.4
+
+* Bump tested WP versions - #106
+
 2020.11.19 - version 2.0.3
 
 * Tweak: Ensure attached media displays on single course page that is not using Sensei custom template - #97
