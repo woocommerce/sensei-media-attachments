@@ -1,5 +1,5 @@
 {
-  "name": "sensei-media-attachments",
+  "name": "woocommerce/sensei-media-attachments",
   "description": "Media attachments extension for Sensei",
   "require-dev": {
     "php": "^7",
